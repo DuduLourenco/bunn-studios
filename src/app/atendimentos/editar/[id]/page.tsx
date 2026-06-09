@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, use } from 'react';
 import { useRouter } from 'next/navigation';
 import { atendimentoService, Atendimento } from '@/lib/services';
 import { useAuth } from '@/context/AuthContext';
@@ -8,15 +8,15 @@ import { ArrowLeft, Save, Briefcase, Calendar, Lock, AlertTriangle } from 'lucid
 import Link from 'next/link';
 
 interface EditarPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default function EditarAtendimentoPage({ params }: EditarPageProps) {
   const router = useRouter();
   const { user } = useAuth();
-  const id = params.id;
+  const { id } = use(params);
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
