@@ -2,12 +2,13 @@
 
 import React, { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { Sparkles, Mail, Lock, AlertCircle, ArrowRight } from 'lucide-react';
+import { Sparkles, Mail, Lock, AlertCircle, ArrowRight, Eye, EyeOff } from 'lucide-react';
 
 export default function LoginPage() {
   const { login, loading } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -24,20 +25,7 @@ export default function LoginPage() {
     }
   };
 
-  // Função para Login Rápido (Simplifica os testes para o avaliador)
-  const handleQuickLogin = async (role: 'admin' | 'employee') => {
-    const quickEmail = role === 'admin' ? 'admin@bunn.com' : 'func@bunn.com';
-    const quickPass = role === 'admin' ? 'admin123' : 'func123';
-    
-    setEmail(quickEmail);
-    setPassword(quickPass);
-    setError(null);
-    try {
-      await login(quickEmail, quickPass);
-    } catch (err: any) {
-      setError(err.message || 'Falha ao logar no modo rápido.');
-    }
-  };
+
 
   return (
     <div style={containerStyle}>
@@ -83,15 +71,39 @@ export default function LoginPage() {
               <Lock size={14} style={{ color: 'var(--text-muted)' }} />
               Senha de acesso
             </label>
-            <input
-              type="password"
-              className="form-input"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              disabled={loading}
-              required
-            />
+            <div style={{ position: 'relative' }}>
+              <input
+                type={showPassword ? 'text' : 'password'}
+                className="form-input"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                disabled={loading}
+                required
+                style={{ paddingRight: '2.5rem' }}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  position: 'absolute',
+                  right: '0.75rem',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  background: 'none',
+                  border: 'none',
+                  color: 'var(--text-muted)',
+                  cursor: 'pointer',
+                  padding: 0,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+                tabIndex={-1}
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
           </div>
 
           <button
@@ -104,35 +116,6 @@ export default function LoginPage() {
             {!loading && <ArrowRight size={16} />}
           </button>
         </form>
-
-        {/* Atalho de Testes Rápidos */}
-        <div style={quickLoginContainerStyle}>
-          <div style={dividerStyle}>
-            <span style={dividerTextStyle}>Teste Rápido (Modo Local)</span>
-          </div>
-          
-          <div style={quickButtonsStyle}>
-            <button
-              onClick={() => handleQuickLogin('admin')}
-              className="btn btn-secondary btn-sm"
-              style={{ flex: 1, fontSize: '0.8rem', padding: '0.6rem' }}
-              disabled={loading}
-              type="button"
-            >
-              Perfil Admin
-            </button>
-            
-            <button
-              onClick={() => handleQuickLogin('employee')}
-              className="btn btn-secondary btn-sm"
-              style={{ flex: 1, fontSize: '0.8rem', padding: '0.6rem' }}
-              disabled={loading}
-              type="button"
-            >
-              Perfil Funcionário
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   );
@@ -216,29 +199,4 @@ const errorAlertStyle: React.CSSProperties = {
   width: '100%',
 };
 
-const quickLoginContainerStyle: React.CSSProperties = {
-  marginTop: '2rem',
-  width: '100%',
-};
 
-const dividerStyle: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  position: 'relative',
-  marginBottom: '1rem',
-};
-
-const dividerTextStyle: React.CSSProperties = {
-  background: 'var(--bg-secondary)',
-  padding: '0 0.75rem',
-  fontSize: '0.75rem',
-  color: 'var(--text-muted)',
-  zIndex: 1,
-};
-
-const quickButtonsStyle: React.CSSProperties = {
-  display: 'flex',
-  gap: '0.75rem',
-  width: '100%',
-};
