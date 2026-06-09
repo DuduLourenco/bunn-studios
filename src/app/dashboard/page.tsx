@@ -41,7 +41,7 @@ export default function DashboardPage() {
   if (loading) {
     return (
       <div style={loadingContainerStyle}>
-        <div className="text-gradient-purple" style={{ fontSize: '1.25rem', fontWeight: 600 }}>
+        <div className="text-brand" style={{ fontSize: '1.25rem', fontWeight: 600 }}>
           Carregando indicadores...
         </div>
       </div>
@@ -117,7 +117,7 @@ export default function DashboardPage() {
   const totalServicos = atendimentos.length;
 
   // Paleta de cores para o Donut
-  const COLORS = ['#8b5cf6', '#06b6d4', '#10b981', '#f59e0b', '#ef4444', '#ec4899'];
+  const COLORS = ['#dedc00', '#facc15', '#a3a3a3', '#64748b', '#2b2b2b', '#4a4a4a'];
 
   // 3. DADOS PARA O GRÁFICO DE EVOLUÇÃO MENSAL
   // Vamos agrupar por Ano-Mês de data_inicio nos últimos 6 meses
@@ -348,7 +348,7 @@ export default function DashboardPage() {
       <div style={headerWrapperStyle}>
         <div>
           <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            Painel <span className="text-gradient-purple">Gerencial</span>
+            Painel <span className="text-brand">Gerencial</span>
           </h1>
           <p>Visão geral de desempenho, finanças e prazos da Bunn Studios.</p>
         </div>
@@ -411,7 +411,7 @@ export default function DashboardPage() {
         <div className="card" style={metricCardStyle}>
           <div style={metricHeaderStyle}>
             <span style={metricTitleStyle}>No Prazo %</span>
-            <div style={{ ...iconWrapperStyle, color: 'var(--accent)', backgroundColor: 'rgba(6, 182, 212, 0.15)' }}>
+            <div style={{ ...iconWrapperStyle, color: 'var(--accent)', backgroundColor: 'rgba(250, 204, 21, 0.15)' }}>
               <Percent size={20} />
             </div>
           </div>
@@ -455,7 +455,7 @@ export default function DashboardPage() {
         </div>
 
         {/* LUCRO LIQUIDO */}
-        <div className="card" style={{ ...financialCardStyle, background: 'linear-gradient(135deg, rgba(25, 25, 44, 0.6) 0%, rgba(139, 92, 246, 0.1) 100%)' }}>
+        <div className="card" style={financialCardStyle}>
           <div style={metricHeaderStyle}>
             <div>
               <span style={metricTitleStyle}>Margem de Lucro</span>
@@ -519,6 +519,7 @@ const headerWrapperStyle: React.CSSProperties = {
 const metricCardStyle: React.CSSProperties = {
   display: 'flex',
   flexDirection: 'column',
+  justifyContent: 'space-between',
   padding: '1.5rem',
 };
 
@@ -557,7 +558,11 @@ const metricSubtextStyle: React.CSSProperties = {
 };
 
 const financialCardStyle: React.CSSProperties = {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
   padding: '1.5rem',
+  minHeight: '120px',
 };
 
 const financialValueStyle: React.CSSProperties = {

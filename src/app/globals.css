@@ -1,26 +1,26 @@
 /* globals.css */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-  --font-outfit: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   
-  /* Cores Principais */
-  --bg-primary: #0a0a0f;
-  --bg-secondary: #12121e;
-  --bg-tertiary: #19192c;
-  --border-color: #26263f;
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
+  /* Cores Principais - Estilo Bunn */
+  --bg-primary: #2b2b2b;
+  --bg-secondary: #3c3c3b;
+  --bg-tertiary: #4a4a4a;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --text-primary: #ffffff;
+  --text-secondary: #c6c6c6;
+  --text-muted: #a3a3a3;
   
-  /* Cores de Destaque */
-  --primary: #8b5cf6;
-  --primary-hover: #7c3aed;
-  --primary-glow: rgba(139, 92, 246, 0.3);
+  /* Cores de Destaque - Bunn Yellow */
+  --primary: #dedc00;
+  --primary-hover: #ccc200;
+  --primary-glow: rgba(222, 220, 0, 0.2);
   
-  --accent: #06b6d4;
-  --accent-hover: #0891b2;
-  --accent-glow: rgba(6, 182, 212, 0.3);
+  --accent: #facc15;
+  --accent-hover: #eab308;
+  --accent-glow: rgba(250, 204, 21, 0.2);
 
   /* Status Colors */
   --status-agendado-bg: rgba(59, 130, 246, 0.15);
@@ -40,7 +40,7 @@
   --status-atrasado-border: rgba(239, 68, 68, 0.3);
 
   --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
-  --glow-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+  --glow-shadow: 0 0 20px var(--primary-glow);
   
   --border-radius-sm: 8px;
   --border-radius-md: 12px;
@@ -62,7 +62,7 @@ body {
   overflow-x: hidden;
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  font-family: var(--font-outfit);
+  font-family: var(--font-inter);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
@@ -142,7 +142,7 @@ p {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  font-family: var(--font-outfit);
+  font-family: var(--font-inter);
   font-weight: 600;
   font-size: 0.95rem;
   padding: 0.75rem 1.25rem;
@@ -154,7 +154,7 @@ p {
 
 .btn-primary {
   background-color: var(--primary);
-  color: #ffffff;
+  color: #000000;
   box-shadow: 0 4px 14px var(--primary-glow);
 }
 
@@ -215,7 +215,7 @@ p {
 .form-input,
 .form-select,
 .form-textarea {
-  font-family: var(--font-outfit);
+  font-family: var(--font-inter);
   font-size: 0.95rem;
   padding: 0.75rem 1rem;
   background-color: var(--bg-secondary);
@@ -241,8 +241,10 @@ p {
 
 /* Cards */
 .card {
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border-color);
+  background: linear-gradient(135deg, rgba(43, 43, 43, 0.7) 0%, rgba(222, 220, 0, 0.15) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: var(--border-radius-md);
   padding: 1.5rem;
   box-shadow: var(--card-shadow);
@@ -250,7 +252,7 @@ p {
 }
 
 .card:hover {
-  border-color: rgba(139, 92, 246, 0.5);
+  border-color: rgba(222, 220, 0, 0.5);
   box-shadow: var(--glow-shadow), var(--card-shadow);
   transform: translateY(-4px);
 }
@@ -291,8 +293,11 @@ p {
 }
 
 /* Utilitários */
-.text-gradient-purple {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+.text-brand {
+  color: var(--primary);
+}
+.text-brand-gradient {
+  background: linear-gradient(135deg, var(--primary) 0%, #ffffff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -303,9 +308,10 @@ p {
   -webkit-text-fill-color: transparent;
 }
 
-/* Glassmorphism */
+/* Glassmorphism (Apenas fallback, agora integrado ao .card) */
 .glass {
-  background: rgba(18, 18, 30, 0.7);
+  /* Propriedades mantidas caso elementos não-card utilizem a classe */
+  background: linear-gradient(135deg, rgba(43, 43, 43, 0.7) 0%, rgba(222, 220, 0, 0.15) 100%);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.05);
@@ -337,13 +343,13 @@ p {
   background-color: var(--bg-secondary);
   border-bottom: 1px solid var(--border-color);
   padding: 1rem 1.5rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   position: sticky;
   top: 0;
   z-index: 100;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  background: rgba(18, 18, 30, 0.85);
+  background: rgba(43, 43, 43, 0.85);
 }
 
 .navbar-container {

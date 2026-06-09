@@ -16,18 +16,8 @@ export default function Navbar() {
     <header className="navbar">
       <div className="navbar-container">
         {/* LOGO */}
-        <Link href="/dashboard" className="navbar-logo">
-          <Sparkles size={20} className="text-gradient-purple" style={{ stroke: 'url(#purple-gradient)' }} />
-          <span>
-            Bunn <span className="text-gradient-purple">Studios</span>
-          </span>
-          {/* Definição do gradiente SVG para o ícone do Sparkles */}
-          <svg width="0" height="0">
-            <linearGradient id="purple-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="var(--primary)" />
-              <stop offset="100%" stopColor="var(--accent)" />
-            </linearGradient>
-          </svg>
+        <Link href="/dashboard" className="navbar-logo hover-scale">
+          <img src="https://bunnprocess.com/LOGOCOMCOELHOBRANCA.png" alt="Bunn Process Logo" style={{ height: '24px', width: 'auto' }} />
         </Link>
 
         {/* NAVIGATION LINKS */}

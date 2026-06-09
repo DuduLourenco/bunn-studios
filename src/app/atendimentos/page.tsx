@@ -157,7 +157,7 @@ export default function AtendimentosListPage() {
       {/* HEADER DA PÁGINA */}
       <div style={headerStyle}>
         <div>
-          <h1>Atendimentos e <span className="text-gradient-purple">Serviços</span></h1>
+          <h1>Atendimentos e <span className="text-brand">Serviços</span></h1>
           <p>Gerencie todos os projetos ativos e entregas da Bunn Studios.</p>
         </div>
         

@@ -54,7 +54,7 @@ export default function MudarSenhaPage() {
     <div className="page-container fade-in" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
       <div className="card glass" style={{ maxWidth: '500px', width: '100%', padding: '2.5rem' }}>
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <div style={{ display: 'inline-flex', padding: '1rem', borderRadius: '50%', background: 'rgba(168, 85, 247, 0.1)', color: 'var(--primary)', marginBottom: '1rem' }}>
+          <div style={{ display: 'inline-flex', padding: '1rem', borderRadius: '50%', background: 'rgba(222, 220, 0, 0.1)', color: 'var(--primary)', marginBottom: '1rem' }}>
             <Lock size={32} />
           </div>
           <h1 style={{ fontSize: '1.5rem', fontWeight: 600, color: 'var(--foreground)' }}>Atualizar Senha</h1>

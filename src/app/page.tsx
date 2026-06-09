@@ -46,14 +46,12 @@ export default function LoginPage() {
       <div style={orb2Style} />
 
       <div className="card glass" style={loginCardStyle}>
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <div style={logoWrapperStyle}>
-            <Sparkles size={28} className="text-gradient-purple" />
-          </div>
-          <h1 style={{ fontSize: '1.8rem', marginBottom: '0.25rem' }}>
-            Bunn <span className="text-gradient-purple">Studios</span>
+        {/* LOGO */}
+        <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+          <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: '0.5rem' }}>
+            <img src="https://bunnprocess.com/LOGOCOMCOELHOBRANCA.png" alt="Bunn Process" style={{ height: '48px', width: 'auto' }} />
           </h1>
-          <p style={{ fontSize: '0.9rem' }}>Portal de Gestão de Atendimentos</p>
+          <p style={{ color: 'var(--text-secondary)', marginTop: '1rem' }}>Painel Administrativo Restrito</p>
         </div>
 
         {error && (

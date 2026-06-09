@@ -71,7 +71,7 @@ export default function FuncionariosPage() {
       {/* HEADER DA PÁGINA */}
       <div style={headerStyle}>
         <div>
-          <h1>Gestão de <span className="text-gradient-purple">Equipe</span></h1>
+          <h1>Gestão de <span className="text-brand">Equipe</span></h1>
           <p>Gerencie os acessos e permissões dos funcionários da Bunn Studios.</p>
         </div>
       </div>
@@ -81,7 +81,7 @@ export default function FuncionariosPage() {
         <div className="card glass" style={formCardStyle}>
           <div style={cardHeaderStyle}>
             <div style={iconContainerStyle}>
-              <UserPlus size={20} className="text-gradient-purple" />
+              <UserPlus size={20} className="text-brand" />
             </div>
             <h2 style={{ fontSize: '1.25rem', color: 'var(--foreground)' }}>Novo Funcionário</h2>
           </div>
@@ -160,7 +160,7 @@ export default function FuncionariosPage() {
         {/* Lista de Funcionários */}
         <div>
           <h2 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem', fontSize: '1.25rem', color: 'var(--foreground)' }}>
-            <Users size={20} className="text-gradient-purple" />
+            <Users size={20} className="text-brand" />
             Membros da Equipe ({employees.length})
           </h2>
 
@@ -239,7 +239,7 @@ const iconContainerStyle: React.CSSProperties = {
   width: '40px',
   height: '40px',
   borderRadius: '10px',
-  background: 'rgba(168, 85, 247, 0.1)',
+  background: 'rgba(222, 220, 0, 0.1)',
 };
 
 const cardsGridStyle: React.CSSProperties = {
@@ -262,7 +262,7 @@ const avatarStyle = (role: string): React.CSSProperties => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  background: role === 'admin' ? 'linear-gradient(135deg, rgba(168,85,247,0.2) 0%, rgba(99,102,241,0.2) 100%)' : 'var(--bg-tertiary)',
+  background: role === 'admin' ? 'linear-gradient(135deg, rgba(222,220,0,0.2) 0%, rgba(204,194,0,0.2) 100%)' : 'var(--bg-tertiary)',
   color: role === 'admin' ? 'var(--primary)' : 'var(--text-muted)',
   flexShrink: 0,
 });

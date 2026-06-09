@@ -98,7 +98,7 @@ export default function NovoAtendimentoPage() {
 
       {/* TITULO */}
       <div style={{ marginBottom: '2rem' }}>
-        <h1>Cadastrar <span className="text-gradient-purple">Atendimento</span></h1>
+        <h1>Cadastrar <span className="text-brand">Atendimento</span></h1>
         <p>Preencha os dados abaixo para registrar um novo serviço prestado ou agendado.</p>
       </div>
 

@@ -157,7 +157,7 @@ export default function EditarAtendimentoPage({ params }: EditarPageProps) {
   if (loading) {
     return (
       <div style={loadingContainerStyle}>
-        <div className="text-gradient-purple" style={{ fontSize: '1.25rem', fontWeight: 600 }}>
+        <div className="text-brand" style={{ fontSize: '1.25rem', fontWeight: 600 }}>
           Carregando dados do atendimento...
         </div>
       </div>
@@ -176,7 +176,7 @@ export default function EditarAtendimentoPage({ params }: EditarPageProps) {
 
       {/* TITULO */}
       <div style={{ marginBottom: '2rem' }}>
-        <h1>Editar <span className="text-gradient-purple">Atendimento</span></h1>
+        <h1>Editar <span className="text-brand">Atendimento</span></h1>
         <p>Altere os dados necessários do atendimento selecionado.</p>
       </div>
 
