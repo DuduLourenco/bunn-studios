@@ -17,7 +17,7 @@ export default function Navbar() {
       <div className="navbar-container">
         {/* LOGO */}
         <Link href="/dashboard" className="navbar-logo hover-scale">
-          <img src="https://bunnprocess.com/LOGOCOMCOELHOBRANCA.png" alt="Bunn Process Logo" style={{ height: '24px', width: 'auto' }} />
+          <img src="/logo.png" alt="Bunn Process Logo" style={{ height: '24px', width: 'auto' }} />
         </Link>
 
         {/* NAVIGATION LINKS */}

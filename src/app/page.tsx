@@ -49,7 +49,7 @@ export default function LoginPage() {
         {/* LOGO */}
         <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
           <h1 style={{ display: 'flex', justifyContent: 'center', marginBottom: '0.5rem' }}>
-            <img src="https://bunnprocess.com/LOGOCOMCOELHOBRANCA.png" alt="Bunn Process" style={{ height: '48px', width: 'auto' }} />
+            <img src="/logo.png" alt="Bunn Process" style={{ height: '48px', width: 'auto' }} />
           </h1>
           <p style={{ color: 'var(--text-secondary)', marginTop: '1rem' }}>Painel Administrativo Restrito</p>
         </div>
