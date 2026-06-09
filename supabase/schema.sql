@@ -29,14 +29,9 @@ CREATE POLICY "Qualquer usuário autenticado pode ler perfis"
     ON public.profiles FOR SELECT 
     USING (auth.role() = 'authenticated');
 
-CREATE POLICY "Apenas administradores podem atualizar perfis" 
+CREATE POLICY "Usuarios podem atualizar seu proprio perfil" 
     ON public.profiles FOR UPDATE 
-    USING (
-        EXISTS (
-            SELECT 1 FROM public.profiles 
-            WHERE id = auth.uid() AND role = 'admin'
-        )
-    );
+    USING (id = auth.uid());
 
 -- 2. TABELA DE ATENDIMENTOS / SERVIÇOS
 CREATE TABLE public.atendimentos (
