@@ -24,14 +24,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(currentUser);
     setLoading(false);
 
-    // Proteção de rota cliente simples
-    // Se não estiver logado e não for a página de login (/), redireciona para login
+    // Proteção de rota cliente
     if (!currentUser && pathname !== '/') {
       router.push('/');
+      return;
     }
-    // Se estiver logado e for a página de login, redireciona para o dashboard
-    else if (currentUser && pathname === '/') {
-      router.push('/dashboard');
+    
+    if (currentUser) {
+      if (currentUser.precisa_trocar_senha && pathname !== '/mudar-senha') {
+        router.push('/mudar-senha');
+        return;
+      }
+      if (!currentUser.precisa_trocar_senha && pathname === '/') {
+        router.push('/dashboard');
+        return;
+      }
     }
   }, [pathname, router]);
 
@@ -40,7 +47,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       const loggedUser = await authService.login(email, password);
       setUser(loggedUser);
-      router.push('/dashboard');
+      if (loggedUser.precisa_trocar_senha) {
+        router.push('/mudar-senha');
+      } else {
+        router.push('/dashboard');
+      }
       return loggedUser;
     } catch (error) {
       throw error;

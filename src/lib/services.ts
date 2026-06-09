@@ -7,6 +7,7 @@ export interface UserProfile {
   id: string;
   email: string;
   role: UserRole;
+  precisa_trocar_senha?: boolean;
 }
 
 export interface Atendimento {
@@ -28,9 +29,9 @@ export interface Atendimento {
 }
 
 // MOCK DATA PARA LOCALSTORAGE FALLBACK
-const MOCK_USERS: { [email: string]: { id: string; email: string; role: UserRole; password: string } } = {
-  'admin@bunn.com': { id: 'admin-uuid-1111', email: 'admin@bunn.com', role: 'admin', password: 'admin123' },
-  'func@bunn.com': { id: 'employee-uuid-2222', email: 'func@bunn.com', role: 'employee', password: 'func123' },
+const MOCK_USERS: { [email: string]: { id: string; email: string; role: UserRole; password: string; precisa_trocar_senha?: boolean } } = {
+  'admin@bunn.com': { id: 'admin-uuid-1111', email: 'admin@bunn.com', role: 'admin', password: 'admin123', precisa_trocar_senha: false },
+  'func@bunn.com': { id: 'employee-uuid-2222', email: 'func@bunn.com', role: 'employee', password: 'func123', precisa_trocar_senha: true },
 };
 
 const INITIAL_MOCK_SERVICES: Atendimento[] = [
@@ -175,6 +176,7 @@ export const authService = {
         id: profileData.id,
         email: profileData.email,
         role: profileData.role as UserRole,
+        precisa_trocar_senha: profileData.precisa_trocar_senha,
       };
 
       if (typeof window !== 'undefined') {
@@ -192,6 +194,7 @@ export const authService = {
         id: user.id,
         email: user.email,
         role: user.role,
+        precisa_trocar_senha: user.precisa_trocar_senha,
       };
       
       if (typeof window !== 'undefined') {
@@ -207,6 +210,86 @@ export const authService = {
     }
     if (typeof window !== 'undefined') {
       localStorage.removeItem('bunn_current_user');
+    }
+  },
+
+  async listEmployees(): Promise<UserProfile[]> {
+    if (isSupabaseConfigured && supabase) {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .order('criado_em', { ascending: false });
+      if (error) throw new Error(error.message);
+      return data as UserProfile[];
+    } else {
+      return Object.values(MOCK_USERS);
+    }
+  },
+
+  async adminCreateUser(email: string, password: string): Promise<void> {
+    if (isSupabaseConfigured && supabase) {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error("Você precisa estar logado.");
+
+      const response = await fetch('/api/funcionarios', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`
+        },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || 'Erro ao criar funcionário');
+      }
+    } else {
+      if (!MOCK_USERS[email]) {
+        MOCK_USERS[email] = {
+          id: 'mock-' + Math.random().toString(36).substr(2, 9),
+          email,
+          role: 'employee',
+          password,
+          precisa_trocar_senha: true
+        };
+      }
+    }
+  },
+
+  async updatePassword(newPassword: string): Promise<void> {
+    const currentUser = this.getCurrentUser();
+    if (!currentUser) throw new Error("Usuário não autenticado.");
+
+    if (isSupabaseConfigured && supabase) {
+      const { error: updateError } = await supabase.auth.updateUser({ password: newPassword });
+      if (updateError) throw new Error(updateError.message);
+
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({ precisa_trocar_senha: false })
+        .eq('id', currentUser.id);
+
+      if (profileError) throw new Error(profileError.message);
+
+      currentUser.precisa_trocar_senha = false;
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('bunn_current_user', JSON.stringify(currentUser));
+      }
+    } else {
+      // Simulação Local Storage
+      const mockUserKey = Object.keys(MOCK_USERS).find(
+        key => MOCK_USERS[key].email.toLowerCase() === currentUser.email.toLowerCase()
+      );
+      if (mockUserKey) {
+        MOCK_USERS[mockUserKey].password = newPassword;
+        MOCK_USERS[mockUserKey].precisa_trocar_senha = false;
+      }
+      
+      currentUser.precisa_trocar_senha = false;
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('bunn_current_user', JSON.stringify(currentUser));
+      }
     }
   },
 

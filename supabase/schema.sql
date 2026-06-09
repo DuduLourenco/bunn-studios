@@ -2,6 +2,11 @@
 -- SCHEMA SQL PARA APLICAÇÃO BUNN STUDIOS
 -- 
 
+-- Limpar banco de dados (se necessário recriar)
+DROP TABLE IF EXISTS public.atendimentos CASCADE;
+DROP TABLE IF EXISTS public.profiles CASCADE;
+DROP FUNCTION IF EXISTS public.handle_new_user CASCADE;
+
 -- Habilitar extensão UUID se necessário
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
@@ -11,6 +16,7 @@ CREATE TABLE public.profiles (
     id UUID REFERENCES auth.users(id) ON DELETE CASCADE PRIMARY KEY,
     email TEXT NOT NULL,
     role TEXT NOT NULL CHECK (role IN ('admin', 'employee')) DEFAULT 'employee',
+    precisa_trocar_senha BOOLEAN NOT NULL DEFAULT false,
     criado_em TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
     atualizado_em TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
@@ -109,14 +115,16 @@ CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
 DECLARE
     default_role TEXT := 'employee';
+    force_password_change BOOLEAN := true;
 BEGIN
-    -- Se for o primeiro usuário a se registrar, podemos promovê-lo a admin
+    -- Se for o primeiro usuário a se registrar, podemos promovê-lo a admin e ele não precisa trocar a senha inicial
     IF NOT EXISTS (SELECT 1 FROM public.profiles) THEN
         default_role := 'admin';
+        force_password_change := false;
     END IF;
 
-    INSERT INTO public.profiles (id, email, role)
-    VALUES (NEW.id, NEW.email, default_role);
+    INSERT INTO public.profiles (id, email, role, precisa_trocar_senha)
+    VALUES (NEW.id, NEW.email, default_role, force_password_change);
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
